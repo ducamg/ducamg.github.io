@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spring-MVC(二) | DK</title><meta name="description" content="Spring MVC"><meta name="keywords" content="Spring MVC,注解的使用"><meta name="author" content="D G"><meta name="copyright" content="D G"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/logo/logo.ico"><link rel="canonical" href="https://ducamg0503.github.io/2020/02/11/Spring-MVC-%E4%BA%8C/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Spring-MVC(二)"><meta property="og:url" content="https://ducamg0503.github.io/2020/02/11/Spring-MVC-%E4%BA%8C/"><meta property="og:site_name" content="DK"><meta property="og:description" content="Spring MVC"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/cover/spring_mvc.jpg"><meta property="article:published_time" content="2020-02-11T05:22:33.000Z"><meta property="article:modified_time" content="2020-09-03T03:48:03.292Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-09-03 11:48:03'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.1.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/logo/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">8</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RequestMapping"><span class="toc-number">1.</span> <span class="toc-text">@RequestMapping</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E6%B3%A8%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">标注位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">其他属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#method"><span class="toc-number">1.2.1.</span> <span class="toc-text">method</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#params"><span class="toc-number">1.2.2.</span> <span class="toc-text">params</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#headers-params%E5%92%8Cheaders%E6%94%AF%E6%8C%81%E7%AE%80%E5%8D%95%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8Fd"><span class="toc-number">1.2.3.</span> <span class="toc-text">headers(params和headers支持简单的表达式d)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#consumes-%E6%8C%87%E6%8E%A5%E6%94%B6%E5%86%85%E5%AE%B9%E7%B1%BB%E5%9E%8B%E6%98%AF%E5%93%AA%E7%A7%8D%E8%AF%B7%E6%B1%82%EF%BC%9A%E8%A7%84%E5%AE%9A%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%B8%ADContent-Type"><span class="toc-number">1.2.4.</span> <span class="toc-text">consumes:指接收内容类型是哪种请求：规定请求头中Content-Type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#produces-%E5%91%8A%E8%AF%89%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%94%E5%9B%9E%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%98%AF%E4%BB%80%E4%B9%88-%E7%BB%99%E5%93%8D%E5%BA%94%E5%A4%B4%E4%B8%AD%E5%8A%A0%E4%B8%8AContent-Type-text-html-charset-utf-8"><span class="toc-number">1.2.5.</span> <span class="toc-text">produces:告诉浏览器返回的类型是什么,给响应头中加上Content-Type:text&#x2F;html;charset&#x3D;utf-8</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RequestMapping-Ant-Ant%E9%A3%8E%E6%A0%BC%E8%B5%84%E6%BA%90%E5%9C%B0%E5%9D%80%E6%94%AF%E6%8C%81%E4%B8%89%E7%A7%8D%E5%8C%B9%E9%85%8D"><span class="toc-number">2.</span> <span class="toc-text">@RequestMapping-Ant:Ant风格资源地址支持三种匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PathVariable"><span class="toc-number">3.</span> <span class="toc-text">@PathVariable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E4%BF%A1%E6%81%AF%E5%B8%A6%E6%9D%A5%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF"><span class="toc-number">4.</span> <span class="toc-text">SpringMVC获取请求信息带来的各种信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RequestParam-%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">@RequestParam 获取请求参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RequestHeader-%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%B8%AD%E7%9A%84%E6%9F%90%E4%B8%AA%E5%80%BC"><span class="toc-number">4.2.</span> <span class="toc-text">@RequestHeader  获取请求头中的某个值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CookieValue-%E8%8E%B7%E5%8F%96%E6%9F%90%E4%B8%AACookie"><span class="toc-number">4.3.</span> <span class="toc-text">@CookieValue 获取某个Cookie</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/cover/spring_mvc.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">DK</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Spring-MVC(二)</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-02-11T05:22:33.000Z" title="发表于 2020-02-11 13:22:33">2020-02-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-03T03:48:03.292Z" title="更新于 2020-09-03 11:48:03">2020-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Spring-MVC/">Spring MVC</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Spring-MVC/%E6%B3%A8%E8%A7%A3/">注解</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h2><h3 id="标注位置"><a href="#标注位置" class="headerlink" title="标注位置"></a>标注位置</h3><ol>
+<li><p>标注在类上：为当前类的所有方法的请求地址指定一个基准路径</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/ducamgold&quot;)</span> <span class="comment">//    /ducamgold/test01</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestMappingTestController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> String SUCCESS=<span class="string">&quot;success&quot;</span>;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/test01&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test01</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;RequestMappingTestController.test01&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>标注在方法上：具体的请求路径</p>
+</li>
+</ol>
+<h3 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h3><h4 id="method"><a href="#method" class="headerlink" title="method"></a>method</h4><ul>
+<li><p>限定请求方式:GET/POST 默认全部接受</br><br> 不是规定的方法方式就会报错:Request method ‘GET’ not supported</br><br> 4xx:客户端错误</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/test02&quot;,method = RequestMethod.POST)</span> <span class="comment">//和@PostMapping(value =&quot;/test02&quot;) 作用相同</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  String <span class="title">test02</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;RequestMappingTestController.test02&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="params"><a href="#params" class="headerlink" title="params"></a>params</h4><ul>
+<li><p>规定请求参数(参数中不能加空格)</p>
+<ol>
+<li><p>param1：表示请求必须包含名为param1的请求参数</p>
+<ul>
+<li>eg:params = {“username”}<br> </br>表示请求参数必须加上username，没带404</li>
+</ul>
+</li>
+<li><p>!param1:表示请求不能包含名为param1的请求参数</p>
+<ul>
+<li>eg:,params = {“!username”}<br> </br>表示请求参数必须不携带加username，带了404</li>
+</ul>
+</li>
+<li><p>param1 != value1:表示请求包含名为param1的请求参数，但其值不能为value1</p>
+<ul>
+<li><p>eg:,params = {“username != 123”}<br>  </br>表示请求参数username的值必须不是123，带了404</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/test03&quot; ,params = &#123;&quot;username=123&quot;,&quot;pwd&quot;,&quot;!age&quot;&#125;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  String <span class="title">test03</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;RequestMappingTestController.test03&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表示请求参数username的值必须不是123，必须有pwd的值，参数中没有age参数</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="headers-params和headers支持简单的表达式d"><a href="#headers-params和headers支持简单的表达式d" class="headerlink" title="headers(params和headers支持简单的表达式d)"></a>headers(params和headers支持简单的表达式d)</h4><ul>
+<li><p>规定请求头：和params一样规定表达式</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* User-Agent:浏览器信息</span></span><br><span class="line"><span class="comment">* 让谷歌不能访问，让edeg可以访问</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;test04&quot;,headers = &#123;&quot;User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36 Edg/80.0.361.56&quot;&#125;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  String <span class="title">test04</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36  谷歌</span></span><br><span class="line">    <span class="comment">//User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36 Edg/80.0.361.56  edeg</span></span><br><span class="line">    System.out.println(<span class="string">&quot;RequestMappingTestController.test04&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="consumes-指接收内容类型是哪种请求：规定请求头中Content-Type"><a href="#consumes-指接收内容类型是哪种请求：规定请求头中Content-Type" class="headerlink" title="consumes:指接收内容类型是哪种请求：规定请求头中Content-Type"></a>consumes:指接收内容类型是哪种请求：规定请求头中Content-Type</h4><h4 id="produces-告诉浏览器返回的类型是什么-给响应头中加上Content-Type-text-html-charset-utf-8"><a href="#produces-告诉浏览器返回的类型是什么-给响应头中加上Content-Type-text-html-charset-utf-8" class="headerlink" title="produces:告诉浏览器返回的类型是什么,给响应头中加上Content-Type:text/html;charset=utf-8"></a>produces:告诉浏览器返回的类型是什么,给响应头中加上Content-Type:text/html;charset=utf-8</h4><h2 id="RequestMapping-Ant-Ant风格资源地址支持三种匹配"><a href="#RequestMapping-Ant-Ant风格资源地址支持三种匹配" class="headerlink" title="@RequestMapping-Ant:Ant风格资源地址支持三种匹配"></a>@RequestMapping-Ant:Ant风格资源地址支持三种匹配</h2><ol>
+<li><p>?：匹配文件中的一种字符</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* ?:匹配一个字符，0个多个都不行</span></span><br><span class="line"><span class="comment">*      模糊和精确多个匹配情况下精确优先</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/antest0?&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">antTest02</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;RequestMappingTest02Controller.antTest02&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>*：匹配文件中的任意字符和一层路径</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*  匹配多个字符</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/antest0*&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">antTest03</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;RequestMappingTest02Controller.antTest03&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>*<em>:*</em>：匹配多层路径</p>
+<ol>
+<li><p>一层路径</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 匹配一层路径</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/a/*/antest01&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">antTest04</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;RequestMappingTest02Controller.antTest04&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多层路径</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*  多层路径</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/a/**/antest01&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">antTest05</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;RequestMappingTest02Controller.antTest05&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="PathVariable"><a href="#PathVariable" class="headerlink" title="@PathVariable"></a>@PathVariable</h2><ol>
+<li><p>接收请求路径中占位符的值</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  /user/admin    /user/ducamgold</span></span><br><span class="line">  <span class="meta">@RequestMapping(&quot;/user/&#123;id&#125;&quot;)</span>   <span class="comment">//路径上可以有占位符：  语法：可以在任意路径的地方写一个&#123;变量名&#125;</span></span><br><span class="line">                                  <span class="comment">//路径上的占位符只能占一层路径</span></span><br><span class="line">                                  <span class="comment">//http://localhost:8080/4_SpringMVC_02_war_exploded/user/admin</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">pathVariableTest</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> String id)</span></span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;占位符的值：&quot;</span>+id);<span class="comment">//admin</span></span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="SpringMVC获取请求信息带来的各种信息"><a href="#SpringMVC获取请求信息带来的各种信息" class="headerlink" title="SpringMVC获取请求信息带来的各种信息"></a>SpringMVC获取请求信息带来的各种信息</h2><h3 id="RequestParam-获取请求参数"><a href="#RequestParam-获取请求参数" class="headerlink" title="@RequestParam 获取请求参数"></a>@RequestParam 获取请求参数</h3><ul>
+<li><p>value:指定要获取的参数key</p>
+</li>
+<li><p>required: 这个参数是否必须的</p>
+</li>
+<li><p>defultValue:默认值</p>
+</li>
+<li><p>默认是必须带参数的</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//url:http://localhost:8080/4_SpringMVC_04_war_exploded/hello02?username=tomcat</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/hello02&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">test02</span><span class="params">(<span class="meta">@RequestParam(value = &quot;username&quot;,required = false)</span> String username)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;变量的值：&quot;</span>+username); <span class="comment">//=tomcat</span></span><br><span class="line">    <span class="keyword">return</span> SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;hello02?username=tomcat&quot;&gt;获取请求参数&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>和@PathVariable的区别</p>
+<ul>
+<li>@RequestParam(“user”) 获取请求参数的值</li>
+<li>@PathVariable(“user”) 获取路径的值</li>
+<li>/book/[{user}(@PathVariable)]?[user=admin(@RequestParam)]</li>
+</ul>
+</li>
+</ul>
+<h3 id="RequestHeader-获取请求头中的某个值"><a href="#RequestHeader-获取请求头中的某个值" class="headerlink" title="@RequestHeader  获取请求头中的某个值"></a>@RequestHeader  获取请求头中的某个值</h3><ul>
+<li><p>如果没有这个值就会报错</p>
+</li>
+<li><p>value:指定要获取的参数key</p>
+</li>
+<li><p>required: 这个参数是否必须的</p>
+</li>
+<li><p>defultValue:默认值</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//url：http://localhost:8080/4_SpringMVC_04_war_exploded/hello03?user=tomcat</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">test03</span><span class="params">(<span class="meta">@RequestParam(value = &quot;user&quot;,required = false,defaultValue = &quot;没带参数&quot;)</span></span></span></span><br><span class="line"><span class="function"><span class="params">                                String username,<span class="meta">@RequestHeader(value = &quot;User-Agent&quot;,required = false,defaultValue = &quot;没有带请求头&quot;)</span> String userAgent)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;变量的值：&quot;</span>+username); <span class="comment">//tomcat</span></span><br><span class="line">    System.out.println(<span class="string">&quot;请求头中浏览器的信息：&quot;</span>+userAgent); <span class="comment">//Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/527.25 (KHTML, like Gecko) Chrome/76.0.44503.1546 Safari/578.36 Edg/35.0.578.72</span></span><br><span class="line">    <span class="keyword">return</span> SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="CookieValue-获取某个Cookie"><a href="#CookieValue-获取某个Cookie" class="headerlink" title="@CookieValue 获取某个Cookie"></a>@CookieValue 获取某个Cookie</h3><ul>
+<li><p>value:指定要获取的参数key</p>
+</li>
+<li><p>required: 这个参数是否必须的</p>
+</li>
+<li><p>defultValue:默认值</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//url:http://localhost:8080/4_SpringMVC_04_war_exploded/hello04</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/hello04&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">test04</span><span class="params">(<span class="meta">@RequestParam(value = &quot;user&quot;,required = false,defaultValue = &quot;没带参数&quot;)</span> String username,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="meta">@RequestHeader(value = &quot;User-Agent&quot;,required = false,defaultValue = &quot;没有带请求头&quot;)</span> String userAgent,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="meta">@CookieValue(value = &quot;JSESSIONID&quot;,required = false,defaultValue = &quot;可以不带&quot;)</span>String jid)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;变量的值：&quot;</span>+username);</span><br><span class="line">    System.out.println(<span class="string">&quot;请求头中浏览器的信息：&quot;</span>+userAgent);</span><br><span class="line">    System.out.println(<span class="string">&quot;Cookie中的JSESSIONID=&quot;</span>+jid); <span class="comment">//Cookie中的JSESSIONID=71BC0459A82A54549B8557FE1B48FA7E91</span></span><br><span class="line">    <span class="keyword">return</span> SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/Spring-MVC/">Spring MVC</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/cover/spring_mvc.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/02/12/Spring-MVC-%E4%B8%89/"><img class="prev-cover" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/cover/spring_mvc.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Spring-MVC(三)</div></div></a></div><div class="next-post pull-right"><a href="/2020/02/11/Spring-MVC-%E4%B8%80/"><img class="next-cover" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/cover/spring_mvc.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Spring-MVC(一)</div></div></a></div></nav></article></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/cover/spring_mvc.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By D G</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/js/utils.js"></script><script src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
