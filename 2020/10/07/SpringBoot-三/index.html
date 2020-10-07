@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpringBoot(三) | DK</title><meta name="description" content="SpringBoot"><meta name="keywords" content="SpringBoot"><meta name="author" content="D G"><meta name="copyright" content="D G"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/logo/logo.ico"><link rel="canonical" href="https://ducamg0503.github.io/2020/10/07/SpringBoot-%E4%B8%89/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="SpringBoot(三)"><meta property="og:url" content="https://ducamg0503.github.io/2020/10/07/SpringBoot-%E4%B8%89/"><meta property="og:site_name" content="DK"><meta property="og:description" content="SpringBoot"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png"><meta property="article:published_time" content="2020-10-07T10:30:48.000Z"><meta property="article:modified_time" content="2020-10-07T11:58:58.913Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-10-07 19:58:58'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.1.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/logo/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">37</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">27</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">28</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#YAML%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">YAML语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">1、基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%80%BC%E7%9A%84%E5%86%99%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">2、值的写法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#application-yml-YAML-Ain%E2%80%99t-Markup-Language"><span class="toc-number">2.1.</span> <span class="toc-text">application.yml(YAML Ain’t Markup Language)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Value%E5%92%8C-ConfigurationProperties%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">@Value和@ConfigurationProperties的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%B3%A8%E5%85%A5%E5%80%BC%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.2.1.</span> <span class="toc-text">配置文件注入值数据校验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PropertySource-amp-ImporyResource"><span class="toc-number">2.3.</span> <span class="toc-text">@PropertySource&amp;@ImporyResource</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="toc-number">2.4.</span> <span class="toc-text">配置文件占位符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Profile"><span class="toc-number">2.5.</span> <span class="toc-text">Profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E4%BD%8D%E7%BD%AE"><span class="toc-number">2.6.</span> <span class="toc-text">配置文件加载位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.7.</span> <span class="toc-text">外部配置文件加载顺序</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">DK</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">SpringBoot(三)</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-07T10:30:48.000Z" title="发表于 2020-10-07 18:30:48">2020-10-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-10-07T11:58:58.913Z" title="更新于 2020-10-07 19:58:58">2020-10-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SpringBoot/">SpringBoot</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SpringBoot/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">配置文件</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="YAML语法"><a href="#YAML语法" class="headerlink" title="YAML语法"></a>YAML语法</h2><h3 id="1、基本语法"><a href="#1、基本语法" class="headerlink" title="1、基本语法"></a>1、基本语法</h3><blockquote>
+<p>K:( <strong>空格</strong>)V :表示一堆键值对(空格必须有)</p>
+</blockquote>
+<ul>
+<li>以空格缩进来控制层级关系；只要是左对齐的一列数据，都是同一个层级的</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">     <span class="attr">port:</span> <span class="number">8081</span></span><br><span class="line">     <span class="attr">path:</span> <span class="string">/hello</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>属性和值是大小写敏感</li>
+</ul>
+<h3 id="2、值的写法"><a href="#2、值的写法" class="headerlink" title="2、值的写法"></a>2、值的写法</h3><ul>
+<li><p>字面量：普通的值(数字，字符串，布尔)</p>
+<ul>
+<li>k: v :字面直接来写</br><pre><code>字符串默认不加上单引号或者双引号</code></pre>
+</li>
+<li>“”:双引号:不会转义字符串里面的特殊字符，特殊字符会作为本身想表示的意思<ul>
+<li>name: “zhangsan \n lisi” :输出: zhangsan 换行 lisi</li>
+</ul>
+</li>
+<li>‘’:单引号:会转义特殊字符，特殊字符最终只是一个字符串输出<ul>
+<li>name: ‘zhangsan \n lisi’ :输出: zhangsan \n lisi</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>对象，Map(属性和值)(键值对)</p>
+<ul>
+<li><p>k: v :在下一行来写对象的属性和值的关系:注意缩进</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span></span><br><span class="line">    <span class="attr">lastName:</span> <span class="string">xxx</span></span><br><span class="line"><span class="attr">age:</span> <span class="number">16</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>行内写法</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span> &#123;<span class="attr">lastName:</span> <span class="string">xxx</span>,<span class="attr">age:</span> <span class="number">16</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>数组(List,Set)</p>
+<ul>
+<li><p>用 - 表示数组中的一个元素</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">fruits:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">apple</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">banana</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>行内写法</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">        <span class="attr">fruits:</span> [<span class="string">apple</span>,<span class="string">banana</span>]</span><br><span class="line">    <span class="string">```</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">### 3. 获取配置值</span></span><br><span class="line"></span><br><span class="line"><span class="string">*</span> <span class="string">配置文件</span></span><br><span class="line"></span><br><span class="line"><span class="string">```yaml</span></span><br><span class="line">    <span class="attr">person:</span></span><br><span class="line">      <span class="attr">lastName:</span> <span class="string">lisi</span></span><br><span class="line">      <span class="attr">age:</span> <span class="number">16</span></span><br><span class="line">      <span class="attr">boss:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">date:</span> <span class="number">2022</span><span class="string">/2/3</span></span><br><span class="line">      <span class="attr">maps:</span> &#123;<span class="attr">k1:</span> <span class="string">v1</span>,<span class="attr">k2:</span> <span class="number">12</span>&#125;</span><br><span class="line">      <span class="attr">lists:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">zhangsan</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">sss</span></span><br><span class="line">      <span class="attr">fruit:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">apple</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>javaBean</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * 将配置文件中配置的每一个值，映射到组件中</span><br><span class="line"> * <span class="meta">@ConfigurationProperties</span>:本类的属性和配置文件的属性进行绑定</span><br><span class="line"> * prefix = <span class="string">&quot;person&quot;</span>:指定映射属性</span><br><span class="line"> *</span><br><span class="line"> * 只有这个组件是容器中的组件，才能提供<span class="meta">@ConfigurationProperties</span>功能</span><br><span class="line"> */</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;person&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String lastName;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> boss;</span><br><span class="line">    <span class="keyword">private</span> Date date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,Object&gt; maps;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Object&gt; lists;</span><br><span class="line">    <span class="keyword">private</span> Fruit fruit;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">* 导入配置文件处理器</span><br><span class="line"></span><br><span class="line">```xml</span><br><span class="line">    &lt;!--导入配置文件处理器，进行绑定--&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/2.3.4.RELEASE/reference/htmlsingle/#appendix">配置文件配置属性参照</a></p>
+<ul>
+<li>SpringBoot使用一个全局的配置文件配置文件名是固定的<ul>
+<li>application.properties</li>
+<li>application.yml</li>
+</ul>
+</li>
+<li>作用:修改SpringBoot自动配置默认值<br> </br>SpringBoot在底层都自动封装号</li>
+</ul>
+<h3 id="application-yml-YAML-Ain’t-Markup-Language"><a href="#application-yml-YAML-Ain’t-Markup-Language" class="headerlink" title="application.yml(YAML Ain’t Markup Language)"></a>application.yml(YAML Ain’t Markup Language)</h3><blockquote>
+<p>YAML  A Markup Language:是一个标记语言 </br><br>YAML Ain’t Markup Language:不是一个标记语言</p>
+</blockquote>
+<ul>
+<li><p>标记语言</p>
+<ul>
+<li><p>以前的配置文件大多都是用XML配置文件</p>
+</li>
+<li><p>YAML:<strong>以数据为中心</strong>，比json，xml等更适合做配置文件</p>
+</li>
+<li><p>YAML:配置实例</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XML:配置实例</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">port</span>&gt;</span>8081<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Value和-ConfigurationProperties的区别"><a href="#Value和-ConfigurationProperties的区别" class="headerlink" title="@Value和@ConfigurationProperties的区别"></a>@Value和@ConfigurationProperties的区别</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>@ConfigurationProperties</th>
+<th>@Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>功能</td>
+<td>批量注入配置文件中的属性</td>
+<td>一个一个指定</td>
+</tr>
+<tr>
+<td>松散绑定(松散语法)</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>SpEL</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>JSR303数据校验</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>复杂类型封装(map)</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody></table>
+<ul>
+<li>配置文件yml还是properties都能获取值</br><br>如果，我们只需要在某个业务逻辑中获取配置文件的某个值，就使用@Value;</br><br>如果，专门编写了一个javaBean来和配置文件进行映射，就是使用@ConfigurationProperties</li>
+</ul>
+<h4 id="配置文件注入值数据校验"><a href="#配置文件注入值数据校验" class="headerlink" title="配置文件注入值数据校验"></a>配置文件注入值数据校验</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;person&quot;)</span></span><br><span class="line"><span class="meta">@Validated</span> <span class="comment">//支持数据校验的注解</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PropertySource-amp-ImporyResource"><a href="#PropertySource-amp-ImporyResource" class="headerlink" title="@PropertySource&amp;@ImporyResource"></a>@PropertySource&amp;@ImporyResource</h3><ul>
+<li>@PropertySource:加载指定的配置文件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PropertySource(value = &quot;classpath:person.properties&quot;)</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;person&quot;)</span><span class="comment">//默认从全局配置文件中获取值</span></span><br><span class="line"><span class="meta">@Validated</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &lt;bean class=&quot;Person&quot;&gt;</span></span><br><span class="line"><span class="comment">     *     &lt;property name=&quot;lastName&quot; value=&quot;字面量/$&#123;key&#125;从环境变量、配置文件中取值/#&#123;SpEL&#125;&quot;</span></span><br><span class="line"><span class="comment">     * &lt;/bean&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String lastName;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> boss;</span><br><span class="line">    <span class="keyword">private</span> Date date;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,Object&gt; maps;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Object&gt; lists;</span><br><span class="line">    <span class="keyword">private</span> Fruit fruit;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@ImportResource;导入Spring的配置文件，让配置文件生效</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ImportResource(locations=&#123;&quot;classpath:beans.xml&quot;&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>SpringBoot推荐给容器中添加组件的方式；推荐使用全注解的方式</p>
+<ol>
+<li><p>配置类====配置文件</p>
+</li>
+<li><p>使用@Bean给容器中添加组件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Configuration</span>：指明当前类是一个配置类就是来替代Spring配置文件</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 在配置文件中用&lt;bean&gt;&lt;/bean&gt;来添加组件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAppConfig</span> </span>&#123;</span><br><span class="line">    <span class="comment">//将方法的返回值添加到容器中，容器中组件默认的id就是方法名</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HelloService <span class="title">helloService</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;MyAppConfig.helloService&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HelloService();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="配置文件占位符"><a href="#配置文件占位符" class="headerlink" title="配置文件占位符"></a>配置文件占位符</h3><ol>
+<li><p>随机数</p>
+ <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">$&#123;random.value&#125;,$&#123;random.int&#125;,&#123;random.uuid&#125;....</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>占位符可以获取之前配置的值，如果没有可以用:指定默认值</p>
+ <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##person</span></span><br><span class="line"><span class="meta">person.last-name</span>=<span class="string">张三$&#123;random.uuid&#125;</span></span><br><span class="line"><span class="meta">person.date</span>=<span class="string">2020/2/3</span></span><br><span class="line"><span class="meta">person.age</span>=<span class="string">$&#123;random.int&#125;</span></span><br><span class="line"><span class="meta">person.boss</span>=<span class="string">true</span></span><br><span class="line"><span class="meta">person.maps.k1</span>=<span class="string">v1</span></span><br><span class="line"><span class="meta">person.maps.ke</span>=<span class="string">v2</span></span><br><span class="line"><span class="meta">person.lists</span>=<span class="string">a,b,c</span></span><br><span class="line"><span class="meta">person.fruit.name</span>=<span class="string">$&#123;person.hello:hello&#125;_apple</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="Profile"><a href="#Profile" class="headerlink" title="Profile"></a>Profile</h3><blockquote>
+<p>profile是spring对不同环境提供不同配置的功能，可以通过激活，指定参数等方式快速切换环境</p>
+</blockquote>
+<ol>
+<li><p>多profile文件</p>
+<ul>
+<li>在编写主配置文件时，文件名可以是application-{profile}.properties/yml</li>
+<li>默认使用application.properties的配置</li>
+</ul>
+</li>
+<li><p>yml支持多文档块方式</p>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">8081</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">prod</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">8083</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">profiles:</span> <span class="string">dev</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">8084</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">profiles:</span> <span class="string">prod</span> <span class="comment">#指定属于哪个环境</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>激活指定profile</p>
+<ol>
+<li>在配置文件中指定:spring.profiles.active=dev  </li>
+<li>命令行:<ol>
+<li>program arguments: –spring.profiles.active=dev</li>
+<li>cmd: java -jar spring-boot-02-config-0.0.1-SNAPSHOT.jar –spring.profiles.active=dev</li>
+</ol>
+</li>
+<li>虚拟机参数: -Dspring.profiles.active=dev</li>
+</ol>
+</li>
+</ol>
+<h3 id="配置文件加载位置"><a href="#配置文件加载位置" class="headerlink" title="配置文件加载位置"></a>配置文件加载位置</h3><ul>
+<li><p>springboot 启动会扫描以下位置的application.properties或者application.yml文件作为springboot的默认配置</p>
+<ul>
+<li>-file:../config/</li>
+<li>-file:../</li>
+<li>classpath:/config/</li>
+<li>-classpath:/</li>
+</ul>
+</li>
+<li><p>SpringBoot会从这四个位置全部加载主配置文件:  <strong>互补配置</strong></p>
+</li>
+<li><p>优先级由高到底，优先级高的配置会覆盖优先级低的配置</p>
+</li>
+<li><p><strong>可以通过spring.config.location改变默认配置文件位置</strong></p>
+<ul>
+<li>项目打包以后，可以使用命令行参数的形式，启动项目的时候来指定配置文件的新位置；指定配置文件和默认配置文件会共同起作用形成互补配置0</li>
+</ul>
+</li>
+</ul>
+<h3 id="外部配置文件加载顺序"><a href="#外部配置文件加载顺序" class="headerlink" title="外部配置文件加载顺序"></a>外部配置文件加载顺序</h3><blockquote>
+<p>springboot也可以从以下位置加载配置;优先级高到低;高优先级的配置覆盖低优先级的配置，所有的配置会形成互补配置</p>
+</blockquote>
+<ol>
+<li><p><strong>命令行参数</strong></p>
+<blockquote>
+<p>java -jar spring-boot-02-config-02.0.0.1-SNAPSHOT.jar –server.port=8087</br><br>  多个参数用空格分开</p>
+</blockquote>
+</li>
+<li><p>来自java:comp/env的JNDI属性</p>
+</li>
+<li><p>java系统属性(System.getProperties())</p>
+</li>
+<li><p>操作系统环境变量</p>
+</li>
+<li><p>RandomValuePropetySource配置的random.*属性值</p>
+<blockquote>
+<p><strong>由jar包外向jar包内进行 寻找</strong></br><strong>优先加载带profile</strong></p>
+</blockquote>
+</li>
+<li><p><strong>jar包外部的application-{profile}.properties或application.yml(带spring.profile)配置文件</strong></p>
+</li>
+<li><p><strong>jar包内部的application-{profile}.properties或application.yml(带spring.profile)配置文件</strong></p>
+<blockquote>
+<p><strong>然后加载不带profile</strong></p>
+</blockquote>
+</li>
+<li><p><strong>jar包外部的application.properties或application.yml(不带spring.profile)配置文件</strong></p>
+</li>
+<li><p><strong>jar包内部的application.properties或application.yml(不带spring.profile)配置文件</strong></p>
+</li>
+<li><p>@Configuration注解上的@PropertySource</p>
+</li>
+<li><p>通过SpringApplication.setDefaultProperties指定的默认值</p>
+</li>
+</ol>
+<p>所有支持匹配值加载来源:<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/2.3.4.RELEASE/reference/htmlsingle/#boot-features-external-config">官方文档</a></p>
+</div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/SpringBoot/">SpringBoot</a><a class="post-meta__tags" href="/tags/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">配置文件</a><a class="post-meta__tags" href="/tags/yml%E8%AF%AD%E6%B3%95/">yml语法</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/07/SpringBoot-%E5%9B%9B/"><img class="prev-cover" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SpringBoot(四)</div></div></a></div><div class="next-post pull-right"><a href="/2020/10/07/SpringBoot-%E4%BA%8C/"><img class="next-cover" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SpringBoot(二)</div></div></a></div></nav></article></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By D G</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/js/utils.js"></script><script src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
