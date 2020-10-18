@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpringBoot(八) | DK</title><meta name="description" content="SpringBoot"><meta name="keywords" content="SpringBoot"><meta name="author" content="D G"><meta name="copyright" content="D G"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/logo/logo.ico"><link rel="canonical" href="https://ducamg0503.github.io/2020/10/18/SpringBoot-%E5%85%AB/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="SpringBoot(八)"><meta property="og:url" content="https://ducamg0503.github.io/2020/10/18/SpringBoot-%E5%85%AB/"><meta property="og:site_name" content="DK"><meta property="og:description" content="SpringBoot"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png"><meta property="article:published_time" content="2020-10-18T07:47:40.000Z"><meta property="article:modified_time" content="2020-10-18T08:34:19.480Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.google.com/specimen/Titillium+Web?query=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-10-18 16:34:19'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.1.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/logo/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">42</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">35</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">36</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot-CRUD"><span class="toc-number">1.</span> <span class="toc-text">SpringBoot CRUD</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CRUD-%E5%91%98%E5%B7%A5%E5%88%97%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text">CRUD-员工列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BD%E9%99%85%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">国际化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#thymeleaf%E5%85%AC%E5%85%B1%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%E6%8A%BD%E5%8F%96"><span class="toc-number">3.</span> <span class="toc-text">thymeleaf公共页面元素抽取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">日期格式化</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">DK</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">SpringBoot(八)</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-18T07:47:40.000Z" title="发表于 2020-10-18 15:47:40">2020-10-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-10-18T08:34:19.480Z" title="更新于 2020-10-18 16:34:19">2020-10-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SpringBoot/">SpringBoot</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SpringBoot/crud/">crud</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SpringBoot/crud/%E5%9B%BD%E9%99%85%E5%8C%96/">国际化</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="SpringBoot-CRUD"><a href="#SpringBoot-CRUD" class="headerlink" title="SpringBoot CRUD"></a>SpringBoot CRUD</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><ol>
+<li><p>开发期间模板引擎实时生效</p>
+<ul>
+<li><p>禁用模板引擎缓存</p>
+  <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 禁用缓存</span></span><br><span class="line"><span class="meta">spring.thymeleaf.cache</span>=<span class="string">false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面修改完成后ctrl+f9编译刷新</p>
+</li>
+</ul>
+</li>
+<li><p>登录错误显示</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;color:red;&quot;</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;message&#125;&quot;</span> <span class="attr">th:if</span>=<span class="string">&quot;$&#123;not #strings.isEmpty(message)&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>拦截器机制进行登录检查</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginHandlerInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    Logger logger = LoggerFactory.getLogger(getClass());</span><br><span class="line">    <span class="comment">//目标方法执行之前</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Object loginUser = request.getSession().getAttribute(<span class="string">&quot;loginUser&quot;</span>);</span><br><span class="line">        System.out.println(loginUser);</span><br><span class="line">        <span class="keyword">if</span> (loginUser == <span class="keyword">null</span>)&#123;</span><br><span class="line">            logger.info(<span class="string">&quot;/未登录：返回登录页面&quot;</span>);</span><br><span class="line">            <span class="comment">//未登录：返回登录页面</span></span><br><span class="line">            request.setAttribute(<span class="string">&quot;message&quot;</span>,<span class="string">&quot;没有权限请先登录&quot;</span>);</span><br><span class="line">            request.getRequestDispatcher(<span class="string">&quot;/index.html&quot;</span>).forward(request,response);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;登录页面&quot;</span>);</span><br><span class="line">            <span class="comment">//以登录:放行请求</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="CRUD-员工列表"><a href="#CRUD-员工列表" class="headerlink" title="CRUD-员工列表"></a>CRUD-员工列表</h3><ol>
+<li><p>RestCRUD(URI:/资源名称/资源标识)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">普通CRUD(uri)</th>
+<th align="right">RestfulCRUD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查询</td>
+<td align="center">getEmp</td>
+<td align="right">emp/{id}–GET</td>
+</tr>
+<tr>
+<td>添加</td>
+<td align="center">addEmp?xxx</td>
+<td align="right">emp–Post</td>
+</tr>
+<tr>
+<td>修改</td>
+<td align="center">uppdateEmp?id=xx&amp;xx=xx</td>
+<td align="right">emp/{id}—Put</td>
+</tr>
+<tr>
+<td>删除</td>
+<td align="center">deleteEmp?id=x</td>
+<td align="right">emp/{id}–Delete</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>请求框架</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">请求uri</th>
+<th align="right">请求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查询所有员工</td>
+<td align="center">getEmps</td>
+<td align="right">GET</td>
+</tr>
+<tr>
+<td>查询某个员工</td>
+<td align="center">getEmp/{id}</td>
+<td align="right">GET</td>
+</tr>
+<tr>
+<td>来到添加页面</td>
+<td align="center">emp</td>
+<td align="right">GET</td>
+</tr>
+<tr>
+<td>添加员工</td>
+<td align="center">emp</td>
+<td align="right">POST</td>
+</tr>
+<tr>
+<td>来到修改页面(查出员工进行信息会写)</td>
+<td align="center">emp/{id}</td>
+<td align="right">GET</td>
+</tr>
+<tr>
+<td>修改页面</td>
+<td align="center">emp</td>
+<td align="right">PUT</td>
+</tr>
+<tr>
+<td>删除员工</td>
+<td align="center">emp/{id}</td>
+<td align="right">DELETE</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>激活请求方式</p>
+ <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.hiddenmethod.filter.enabled</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h2><ul>
+<li><p>以前的国际化</p>
+<ol>
+<li>编写国际化配置文件</li>
+<li>使用ResourcesBundleMessageSource管理国际化资源文件</li>
+<li>在页面使用fmt:message取出国际化内容</li>
+</ol>
+</li>
+<li><p>SpringBoot的国际化</p>
+<ol>
+<li><p>编写国际化配置文件，抽取页面需要显示的国际化消息</p>
+ <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">//指定国际化资源位置</span></span><br><span class="line"><span class="meta">spring.messages.basename</span>=<span class="string">i18n.login</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SpringBoot自动配置了管理国际化资源的组件</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageSourceAutoConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Resource[] NO_RESOURCES = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConfigurationProperties(prefix = &quot;spring.messages&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MessageSourceProperties <span class="title">messageSourceProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MessageSourceProperties();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MessageSource <span class="title">messageSource</span><span class="params">(MessageSourceProperties properties)</span> </span>&#123;</span><br><span class="line">        ResourceBundleMessageSource messageSource = <span class="keyword">new</span> ResourceBundleMessageSource();</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.hasText(properties.getBasename())) &#123;</span><br><span class="line">              <span class="comment">//设置国际化资源文件的基础名(去掉语言国家代码)</span></span><br><span class="line">            messageSource.setBasenames(StringUtils</span><br><span class="line">                    .commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(properties.getBasename())));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (properties.getEncoding() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            messageSource.setDefaultEncoding(properties.getEncoding().name());</span><br><span class="line">        &#125;</span><br><span class="line">        messageSource.setFallbackToSystemLocale(properties.isFallbackToSystemLocale());</span><br><span class="line">        Duration cacheDuration = properties.getCacheDuration();</span><br><span class="line">        <span class="keyword">if</span> (cacheDuration != <span class="keyword">null</span>) &#123;</span><br><span class="line">            messageSource.setCacheMillis(cacheDuration.toMillis());</span><br><span class="line">        &#125;</span><br><span class="line">        messageSource.setAlwaysUseMessageFormat(properties.isAlwaysUseMessageFormat());</span><br><span class="line">        messageSource.setUseCodeAsDefaultMessage(properties.isUseCodeAsDefaultMessage());</span><br><span class="line">        <span class="keyword">return</span> messageSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面获取国际化的值</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-lg btn-primary btn-block&quot;</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>  <span class="attr">th:text</span>=<span class="string">&quot;#&#123;login.btn&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;mt-5 mb-3 text-muted&quot;</span>&gt;</span><span class="symbol">&amp;copy;</span> 2017-2018<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 在链接上携带区域信息</span></span><br><span class="line"><span class="comment">* 自定义区域信息解析</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLocaleResolver</span>  <span class="keyword">implements</span> <span class="title">LocaleResolver</span> </span>&#123;</span><br><span class="line">    Logger logger = LoggerFactory.getLogger(getClass());</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Locale <span class="title">resolveLocale</span><span class="params">(HttpServletRequest httpServletRequest)</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">&quot;MylocaleResolver.resolveLocale&quot;</span>);</span><br><span class="line">        String l = httpServletRequest.getParameter(<span class="string">&quot;l&quot;</span>);</span><br><span class="line">        Locale locale =Locale.getDefault();</span><br><span class="line">        <span class="keyword">if</span>(!(StringUtils.isEmpty(l)))&#123;</span><br><span class="line">            String[] split = l.split(<span class="string">&quot;_&quot;</span>);</span><br><span class="line">            locale=<span class="keyword">new</span> Locale(split[<span class="number">0</span>],split[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> locale;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLocale</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale locale)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>点击中文切换中文，点击英文切换英文</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-sm&quot;</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/index.html(l=&#x27;zh_CN&#x27;)&#125;&quot;</span>&gt;</span>中文<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-sm&quot;</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/index.html(l=&#x27;en_US&#x27;)&#125;&quot;</span>&gt;</span>English<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>原理：国际化Locale(区域信息对象):LocalResolver(获取区域信息对象)</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="thymeleaf公共页面元素抽取"><a href="#thymeleaf公共页面元素抽取" class="headerlink" title="thymeleaf公共页面元素抽取"></a>thymeleaf公共页面元素抽取</h2><ol>
+<li><p>抽取公共片段</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:fragment</span>=<span class="string">&quot;copy&quot;</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引入公共片段</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:insert</span>=<span class="string">&quot;~&#123;footer :: copy&quot;</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">~&#123;templatename :: slector&#125; :模板名 :: 选择器</span><br><span class="line">~&#123;templatename :: fragmentname&#125;:模板名 :: 片段名</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><p>三种引入功能片段的th属性</p>
+<ul>
+<li><p>th:insert:将公共片段插入到声明引入的元素中</p>
+</li>
+<li><p>th:replace:将声明引入的元素替换为公共片段</p>
+</li>
+<li><p>th:include:将被引入的片段的内容包含进标签中</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:fragment</span>=<span class="string">&quot;copy&quot;</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--引入方式  --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 1 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:insert</span>=<span class="string">&quot;footer::copy&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:replace</span>=<span class="string">&quot;footer::copy&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 3 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:include</span>=<span class="string">&quot;footer::copy&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 结果 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 1. --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">            ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2. --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 3. --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> &gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="日期格式化"><a href="#日期格式化" class="headerlink" title="日期格式化"></a>日期格式化</h2><ul>
+<li><p>默认日期是按照/的方式</p>
+</li>
+<li><p>修改格式化方式</p>
+  <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.format.date</span>=<span class="string">yyyy-MM-dd</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/%E5%9B%BD%E9%99%85%E5%8C%96/">国际化</a><a class="post-meta__tags" href="/tags/SpringBoot/">SpringBoot</a><a class="post-meta__tags" href="/tags/crud/">crud</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/18/SpringBoot-%E4%B9%9D/"><img class="prev-cover" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SpringBoot(九)</div></div></a></div><div class="next-post pull-right"><a href="/2020/10/11/SpringBoot-%E4%B8%83/"><img class="next-cover" data-lazy-src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SpringBoot(七)</div></div></a></div></nav></article></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/DG-PIC/springboot/spring-boot.png)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By D G</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/js/utils.js"></script><script src="https://cdn.jsdelivr.net/gh/ducamg/PicGallery@master/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
